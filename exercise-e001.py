@@ -21,6 +21,34 @@ class product:
 
     def __str__(self):
         return f"Name: {self.name}\nCode: {self.code}\nCategory: {self.category.name}\nPrice: {self.price:}"
+    def HightoLowPrice():
+        n = len(products)
+        for i in range(n):
+            for j in range(0, n - i - 1):
+                if products[j].price < products[j + 1].price:
+                    products[j], products[j + 1] = products[j + 1], products[j]
+        print(f"Products Sorted by Price (High to Low):")
+        for product in products:
+            print("\n", product)
+
+    def LowtoHighPrice():
+        n = len(products)
+        for i in range(n):
+            for j in range(0, n - i - 1):
+                if products[j].price > products[j + 1].price:
+                    products[j], products[j + 1] = products[j + 1], products[j]
+        print(f"Products Sorted by Price (Low to high):")
+        for product in products:
+            print("\n", product)
+
+    def SearchCode(scode):
+        for product in products:
+            if product.code == scode:
+                print(f"\nProduct found by code {scode}:\n{product}")
+                break
+        else:
+            print(f"\nProduct with code {scode} not found.")
+
 
 # Create three objects of a category.
 category1 = category("electronics", "C001")
@@ -34,8 +62,8 @@ product("hp","e003",category1,20000),
 product("fen","e004",category1,5000),
 product("top","e005",category2,2000),
 product("dress","e006",category2,1500),
-product("jeans","e007",category2,800),
-product("saree","e008",category2,7000),
+product("jeans","e007",category3,800),
+product("saree","e008",category3,7000),
 product("photo frame","e009",category3,600),
 product("clock","e010",category3,1000)]
 
@@ -47,36 +75,10 @@ print(category3,"\n")
 # Sort and Print products based on price ( Price High to Low and Low to High) with all details.
 
 # Sort and print products based on price (high to low)
-# print("Products Sorted by Price (High to Low):")
-# products_high_to_low = sorted(products, key=lambda x: x.price, reverse=True)
-# for product in products_high_to_low:
-#     print(product)
-#     print("\n")
-n = len(products)
-for i in range(n):
-    for j in range(0, n - i - 1):
-        if products[j].price < products[j + 1].price:
-            products[j], products[j + 1] = products[j + 1], products[j]
-print("Products Sorted by Price (High to Low):")
-for product in products:
-    print("\n",product)
-
+product.HightoLowPrice()
 
 # Sort and print products based on price (low to high)
-for i in range(n):
-    for j in range(0, n - i - 1):
-        if products[j].price > products[j + 1].price:
-            products[j], products[j + 1] = products[j + 1], products[j]
-print("Products Sorted by Price (Low to high):")
-for product in products:
-    print("\n",product)
+product.LowtoHighPrice()
 
 #Search product using its code
-print("Enter Search Code: ")
-s_code = input()
-for product in products:
-    if product.code == scode:
-        print(f"\nProduct found by code {s_code}: {product}")
-        break
-else:
-    print(f"\nProduct with code {s_code} not found.")
+product.SearchCode("e009")
