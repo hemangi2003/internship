@@ -52,8 +52,10 @@ class Product:
     @staticmethod
     def product_list(location_name):
         print(f"Location: {location_name}")
-        for product_d in range(len(P)):
-            print(P[product_d].name, ":-", P[product_d].stock_at_locations[location_name])
+        for product_d in P:
+            if location_name in product_d.stock_at_locations :
+                print(product_d.name, ":-", product_d.stock_at_locations[location_name])
+                # print(product_d.stock_at_locations[location_name].quantity)
         print()
 
 
@@ -77,20 +79,20 @@ class Movement:
                     for y in range(len(location_list)):
                         if location_list[y].name == Movements[x].to_location.name:
                             P[i].stock_at_locations[location_list[y].name] = Movements[x].quantity
-                        else:
-                            P[i].stock_at_locations[location_list[y].name] = 0
+                        # else:
+                        #     P[i].stock_at_locations[location_list[y].name] = 0
                 elif P[i].stock_at_locations != {} and len(P[i].stock_at_locations) == len(location_list):
                     for y in range(len(location_list)):
                         if location_list[y].name == Movements[x].to_location:
                             P[i].stock_at_locations[location_list[y].name] += Movements[x].quantity
-                else:
-                    if P[i].stock_at_locations[Movements[x].from_location.name] >= Movements[x].quantity:
-                        P[i].stock_at_locations[Movements[x].from_location.name] -= Movements[x].quantity
-                        # decreasing the in product quantity at particular location
-                        P[i].stock_at_locations[Movements[x].to_location.name] += Movements[x].quantity
-                    # increasing in product quantity at particular location
-                    else:
-                        print(P[i].name, "product Stock is less")
+                # else:
+                #     if P[i].stock_at_locations[Movements[x].from_location.name] >= Movements[x].quantity:
+                #         P[i].stock_at_locations[Movements[x].from_location.name] -= Movements[x].quantity
+                #         # decreasing the in product quantity at particular location
+                #         P[i].stock_at_locations[Movements[x].to_location.name] += Movements[x].quantity
+                #     # increasing in product quantity at particular location
+                #     else:
+                #         print(P[i].name, "product Stock is less")
 
 
 # Create 4 different location objects.
