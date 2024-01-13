@@ -131,23 +131,21 @@ class Order:
 
     @staticmethod
     def search_order():
-        search_order = input("Enter Search Orders number: ")
+        search_order = input("Enter Search Orders number(write like o1): ")
         for o in order_list:
             if o.number.lower() == search_order.lower():
-                print(
-                    f"Company Name: {o.company}\nBilling Company Name: {o.billing} \nShipping Company Name: {o.shipping}")
                 o.display_order_lines()
                 print(f"Total Amount: {o.total_amount}")
 
     @staticmethod
     def search_product():
         search_product = input("Enter Search Product Name: ")
+        print(f"Order Details: \n")
         for o in ol:
             if o.product.lower() == search_product.lower():
-                print(f"{o.product} Order Details:")
                 print(
                     f"Company Name: {o.order.company}\nBilling Company Name: {o.order.billing} \nShipping Company Name: {o.order.shipping}")
-                print(f" Product: {o.product}, Quantity: {o.quantity}, Price: {o.price}, Subtotal: {o.subtotal}")
+                print(f"Quantity: {o.quantity}, Price: {o.price}, Subtotal: {o.subtotal} \n")
 
 
 class OrderLine:
