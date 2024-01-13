@@ -39,6 +39,13 @@ class Product:
     def __str__(self):
         return f"category:{self.category}\nCode:{self.code}\nName:{self.price}"
 
+    # add stock in stock_at_location
+    def add_stock(self, location, amount):
+        if location.name in self.stock_at_locations:
+            self.stock_at_locations[location.name] = self.stock_at_locations[location.name] + amount
+        else:
+            self.stock_at_locations[location.name] = amount
+
     @staticmethod
     def product_stock_details():
         for h in P:
@@ -69,34 +76,26 @@ class Movement:
 
     # Create one static method named “movements_by_product” inside the “movement” class with one argument
     # named“product”. This method will return all “movement” objects which belong to the passed “product” as an argument.
-    def movements_by_product(product_name):
-        for x in range(len(Movements)):
-            if Movements[x].product.name == product_name:
-                print("From ", Movements[x].from_location.name, "to ", Movements[x].to_location.name, "Product:-",
-                      Movements[x].product.name, ",", "quantity of product:", Movements[x].quantity)
+    def movements_by_product(p):
+        for x in Movements:
+            if x.product.name == p:
+                print("From ", x.from_location.name, "to ", x.to_location.name, "Product:-", x.product.name, "\n",
+                      "number of product movement:", x.quantity)
 
-                if P[i].stock_at_locations == {}:
-                    for y in range(len(location_list)):
-                        if location_list[y].name == Movements[x].to_location.name:
-                            P[i].stock_at_locations[location_list[y].name] = Movements[x].quantity
-                        # else:
-                        #     P[i].stock_at_locations[location_list[y].name] = 0
-                elif P[i].stock_at_locations != {} and len(P[i].stock_at_locations) == len(location_list):
-                    for y in range(len(location_list)):
-                        if location_list[y].name == Movements[x].to_location:
-                            P[i].stock_at_locations[location_list[y].name] += Movements[x].quantity
-                # else:
-                #     if P[i].stock_at_locations[Movements[x].from_location.name] >= Movements[x].quantity:
-                #         P[i].stock_at_locations[Movements[x].from_location.name] -= Movements[x].quantity
-                #         # decreasing the in product quantity at particular location
-                #         P[i].stock_at_locations[Movements[x].to_location.name] += Movements[x].quantity
-                #     # increasing in product quantity at particular location
-                #     else:
-                #         print(P[i].name, "product Stock is less")
+                if x.from_location.name in x.product.stock_at_locations and x.product.stock_at_locations[x.from_location.name] >= x.quantity:
+                    x.product.stock_at_locations[x.from_location.name] -= x.quantity
+
+                    if x.to_location.name in x.product.stock_at_locations:
+                        x.product.stock_at_locations[x.to_location.name] = x.product.stock_at_locations[x.to_location.name] + x.quantity
+                    else:
+                        x.product.stock_at_locations[x.to_location.name] = x.quantity
+                else:
+                    print("-------------------------------------")
+                    print(x.product.name, "product Stock is less")
+                    print("-------------------------------------")
 
 
 # Create 4 different location objects.
-
 Location1 = Location("Rajkot", "l1")
 Location2 = Location("Ahmedabad", "l2")
 Location3 = Location("Bhuj", "l3")
@@ -124,6 +123,20 @@ P5 = Product("p005", "TATA", "vehicle", 50000)
 
 P = [P1, P2, P3, P4, P5]
 
+# Add stocks product in stock_at_location 
+P1.add_stock(Location1, 50)
+P1.add_stock(Location2, 30)
+
+P2.add_stock(Location2, 30)
+P2.add_stock(Location3, 20)
+
+P3.add_stock(Location3, 40)
+
+P4.add_stock(Location4, 10)
+
+P5.add_stock(Location1, 15)
+
+
 Movement1 = Movement(Location1, Location2, P1, 4)
 Movement2 = Movement(Location3, Location4, P2, 3)
 Movement3 = Movement(Location2, Location3, P3, 2)
@@ -135,18 +148,24 @@ Movement7 = Movement(Location4, Location3, P2, 5)
 Movements = [Movement1, Movement2, Movement3, Movement4, Movement5, Movement6]
 
 # Display product details with its stock at various locations using “stock_at_locations”.
+print("# Display product details with its stock at various locations using “stock_at_locations”.")
+print("------------------------------------------------------------------------")
 Product.product_stock_details()
 
+print("Display movements of each product using the “movement_by_product” method.")
+print("------------------------------------------------------------------------")
 # Display movements of each product using the “movement_by_product” method.
 for i in range(len(P)):
     print(P[i].code, P[i].name)
     Movement.movements_by_product(P[i].name)
     print("\n")
 
+print("Display product list by location (group by location)")
+print("-------------------------------------------------------")
 # Display product list by location ( group by location).
 for location in location_list:
     Product.product_list(location.name)
 
 print("product details with stock at locations using “stock_at_locations” after movement.")
-
+print("-------------------------------------------------------")
 Product.product_stock_details()
