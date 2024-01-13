@@ -123,7 +123,7 @@ P5 = Product("p005", "TATA", "vehicle", 50000)
 
 P = [P1, P2, P3, P4, P5]
 
-# Add stocks product in stock_at_location 
+# Add stocks product in stock_at_location
 P1.add_stock(Location1, 50)
 P1.add_stock(Location2, 30)
 
